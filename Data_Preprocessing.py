@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col,isnan,when,count,countDistinct,min,max,mean,stddev
-from pyspark.sql.functions import  trim, lower, avg, expr
+from pyspark.sql.functions import  trim, lower, avg, expr, log1p, sqrt
 from pyspark.sql.functions import  lit, to_date
 from pyspark.sql.types import NumericType
 from pyspark.ml.feature import VectorAssembler, MinMaxScaler, StandardScaler, RobustScaler
@@ -69,8 +69,9 @@ def data_cleaning(df):
     df = df.filter((col("salary") >= (Q1 - 1.5 * IQR)) & (col("salary") <= (Q3 + 1.5 * IQR)))
     print("Cleaned DataFrame after outlier detection:")
     df.show(truncate=False)
+    return df
 
-def data_reduction():
+def data_reduction(df):
 
     assembler = VectorAssembler(inputCols=["age", "salary"], outputCol="features")
     df_vector = assembler.transform(df)
@@ -98,9 +99,29 @@ def data_reduction():
         "robust_scaled"
     ).show(truncate=False)
 
+#DATA TRANSFORMATION
+def apply_power_transform(df):
+    df = df.withColumn("log_age", log1p(col("age")))
+    df = df.withColumn("log_salary", log1p(col("salary")))
+    print("Data after power transform (log1p):")
+    df.show(truncate=False)
+    return df
+
+def apply_function_transformer(df):
+    df = df.withColumn("sqrt_age", sqrt(col("age")))
+    df = df.withColumn("reciprocal_salary", when(col("salary") != 0, 1 / col("salary")).otherwise(None))
+    print("Data after function transforms:")
+    df.show(truncate=False)
+    return df
+
+
 # Call the function
 if __name__ == "__main__":
     data_profilling()
-    data_cleaning(df)
-    data_reduction()
+    cleaned_df = data_cleaning(df)
+    power_df = apply_power_transform(cleaned_df)
+    func_transformed_df = apply_function_transformer(power_df)
+    print("Final data after all transformations and scaling:")
+    data_reduction(cleaned_df)       # Pass cleaned df to data_reduction
     spark.stop()
+
