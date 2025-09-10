@@ -1,0 +1,4 @@
+Hello Hadoop world
+Hadoop is a framework for distributed processing
+Hello world of big data
+Data processing with Hadoop and MapReduce

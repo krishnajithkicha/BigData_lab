@@ -1,0 +1,16 @@
+Data	1
+Hadoop	3
+Hello	2
+MapReduce	1
+a	1
+and	1
+big	1
+data	1
+distributed	1
+for	1
+framework	1
+is	1
+of	1
+processing	2
+with	1
+world	2
