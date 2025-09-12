@@ -1,0 +1,4 @@
+Hadoop is a framework that allows for the distributed processing of large data sets.
+The Hadoop ecosystem includes HDFS and MapReduce.
+Hadoop makes data processing efficient and scalable.
+This word count example counts the occurrences of a specific word in Hadoop.
