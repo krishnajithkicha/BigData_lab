@@ -1,0 +1,19 @@
+CREATE DATABASE mydb;
+use mydb;
+CREATE TABLE employees (
+. . . . . . . . . . . . . . . .>     emp_id INT,
+. . . . . . . . . . . . . . . .>     emp_name STRING,
+. . . . . . . . . . . . . . . .>     emp_age INT,
+. . . . . . . . . . . . . . . .>     emp_salary FLOAT
+. . . . . . . . . . . . . . . .> ) ROW FORMAT DELIMITED
+. . . . . . . . . . . . . . . .> FIELDS TERMINATED BY ','
+. . . . . . . . . . . . . . . .> STORED AS TEXTFILE;
+SHOW TABLES;
+
+ hdfs dfs -put /home/hadoop/Hivedata/employee_data.txt /user/hive/warehouse/employee_data.txt
+
+LOAD DATA INPATH '/home/hadoop/Hivedata/employees_data.txt' INTO TABLE employees ;
+
+SELECT * FROM employees;
+
+ DROP TABLE employees;
