@@ -1,0 +1,1 @@
+ spark-submit /home/cusat/Desktop/Krishna/Big_Data/DataPreprocessing/data_preprocessing.py /home/cusat/Desktop/Krishna/Big_Data/DataPreprocessing/datas.csv
